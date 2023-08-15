@@ -14,16 +14,23 @@ const DB_NAME = process.env.DBNAME || "todo";
 
 const Todo = require("./models/Todo");
 
+
+/**
+ * ==== Getting all Todos ===== (READ)
+ */
 app.get("/", (_req, res) => {
+  const allTodos = Todo.find({});
+
   res.json({
     content: "API is Working!",
+    data: allTodos,
   });
 });
 
-/**
- * POST - Router | Controller
- */
 
+/**
+ * POST - Router | Controller (CREATE)
+ */
 app.post("/create", async (req, res) => {
   const todo = new Todo(req.body);
   const createdTodo = await todo.save();
@@ -38,6 +45,56 @@ app.post("/create", async (req, res) => {
     message: "Todo Created Successfully!",
   });
 });
+
+
+/**
+ * ==== Update ====
+ */
+app.patch('/update', async (req, res) => {
+  try {
+    const userData = req.body;
+    const todoId = req.params.id;
+
+    const todo = await Todo.find({ _id: todoId });
+    if (!todo) return res.json({ success: false, message: "Todo Not Found!" });
+
+    todo.content = userData.content;
+    todo.name = userData.name;
+    await todo.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Todo Updated!",
+      todo,
+    });
+
+  } catch(error){
+    res.status(500).json({ success: false, message: "Something Went Wrong!" });
+  }
+});
+
+
+/**
+ * ==== Delete ====
+ */
+app.delete('/delete', async (req, res) => {
+  try {
+    const todoId = req.params.id;
+
+    const todo = await Todo.findOneAndRemove({ _id: todoId });
+    if (!todo) return res.json({ success: false, message: "Todo Not Found!" });
+
+    res.status(200).json({
+      success: true,
+      message: "Todo Deleted!",
+      todo,
+    });
+
+  } catch(error){
+    res.status(500).json({ success: false, message: "Something Went Wrong!" });
+  }
+});
+
 
 // DB Connection..
 (async () => {
