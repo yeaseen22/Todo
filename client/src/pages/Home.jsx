@@ -1,5 +1,6 @@
 import Layout from '../Components/layout/Layout';
 import Section from '../Components/section/Section';
+import Login from '../Components/login/login'
 
 const experiences = [
   'Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum, sed.',
@@ -17,10 +18,13 @@ const educations = [
 
 const Home = () => {
   return (
-    <Layout>
+    <>
+      <login />
+      <Layout>
       <Section title="Experiences" items={experiences} />
       <Section title="Educations" items={educations} />
     </Layout>
+    </>
   );
 };
 

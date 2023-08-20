@@ -4,6 +4,7 @@ import ClockPage from './pages/ClockPage';
 import Help from './pages/Help';
 import Home from './pages/Home';
 import Tasks from './pages/Tasks';
+import Register from './pages/Register';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Help path="/help" />
       <ClockPage path="/clock" />
       <Tasks path="/tasks" />
+      <Register path='/register' />
     </Router>
   );
 }

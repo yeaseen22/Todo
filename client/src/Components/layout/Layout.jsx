@@ -61,6 +61,16 @@ function Layout(props) {
                 Tasks
               </Link>
             </li>
+            <li>
+              <Link
+                to="/register"
+                className={
+                  path === '/register' ? classes.navItemActive : classes.navItem
+                }
+              >
+                Register
+              </Link>
+            </li>
           </ul>
         </div>
       </nav>
